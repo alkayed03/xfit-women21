@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Xfit Gym – فترة النساء</title>
+<style>
+:root{--pink:#e0457b;--pink-d:#c23266;--pink-l:#fde8f0;--bg:#fff;--card:#fff;--text:#2b2b33;--mute:#8b8b99;--line:#f1d9e3}
+@media (prefers-color-scheme:dark){:root{--bg:#17131a;--card:#221b27;--text:#f4eef6;--mute:#a79fb0;--line:#3a2c42;--pink-l:#3a2030}}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+body{font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);max-width:480px;margin:0 auto;min-height:100vh;padding-bottom:84px}
+header{background:linear-gradient(135deg,var(--pink),var(--pink-d));color:#fff;padding:22px 18px 26px;border-radius:0 0 26px 26px;text-align:center}
+header .logo{font-size:30px;font-weight:900;letter-spacing:1px}
+header .sub{opacity:.9;font-size:14px;margin-top:2px}
+.view{display:none;padding:18px}.view.on{display:block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tile{background:var(--pink-l);border:none;border-radius:20px;padding:22px 10px;text-align:center;color:var(--text);font:inherit;font-weight:700;cursor:pointer}
+.tile .ic{font-size:36px;display:block;margin-bottom:8px}
+h2{font-size:18px;margin-bottom:12px;color:var(--pink)}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:8px}
+.day{flex:0 0 auto;min-width:58px;padding:9px 6px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--text);font:inherit;font-size:13px;cursor:pointer;text-align:center}
+.day.on{background:var(--pink);color:#fff;border-color:var(--pink)}
+.cls{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px}
+.cls .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.cls .name{font-weight:800;color:var(--pink);font-size:17px}
+.cls .meta{color:var(--mute);font-size:13px;line-height:1.8}
+.btn{display:inline-block;background:var(--pink);color:#fff;border:none;border-radius:12px;padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;margin-top:8px}
+.btn.alt{background:transparent;color:var(--pink);border:1px solid var(--pink)}
+.empty{text-align:center;color:var(--mute);padding:40px 0}
+details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+summary{padding:14px;font-weight:700;cursor:pointer;color:var(--pink);list-style:none}
+summary::-webkit-details-marker{display:none}
+details ul{padding:0 30px 14px 14px;color:var(--text);line-height:2}
+.back{background:none;border:none;color:var(--pink);font:inherit;font-weight:700;margin-bottom:10px;cursor:pointer}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:var(--card);border-top:1px solid var(--line);display:flex;padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px))}
+nav button{flex:1;background:none;border:none;font:inherit;font-size:11px;color:var(--mute);cursor:pointer}
+nav button .ic{display:block;font-size:22px}
+nav button.on{color:var(--pink);font-weight:700}
+.fab{position:fixed;bottom:84px;left:16px;width:54px;height:54px;border-radius:50%;background:#25d366;color:#fff;display:flex;align-items:center;justify-content:center;font-size:26px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.full{background:#bbb!important;pointer-events:none}
+.badge{font-size:12px;border-radius:10px;padding:2px 8px;background:var(--pink-l);color:var(--pink);font-weight:700}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.modal.on{display:flex}
+.sheet{background:var(--bg);width:100%;max-width:480px;border-radius:22px 22px 0 0;padding:22px 18px calc(22px + env(safe-area-inset-bottom,0px))}
+.sheet h3{color:var(--pink);margin-bottom:4px}
+.sheet input{width:100%;padding:13px;border:1px solid var(--line);border-radius:12px;font:inherit;background:var(--card);color:var(--text);margin-top:10px}
+.msg{margin-top:10px;font-size:14px;min-height:20px}
+</style>
+</head>
+<body>
+<header><div class="logo">XFIT GYM</div><div class="sub">فترة النساء 💗</div></header>
+
+<section class="view on" id="home">
+  <div class="grid">
+    <button class="tile" data-go="schedule"><span class="ic">📅</span>جدول الحصص</button>
+    <button class="tile" data-go="workout"><span class="ic">🏋️‍♀️</span>برنامج التمارين</button>
+    <button class="tile" data-go="nutrition"><span class="ic">🍎</span>التغذية</button>
+    <button class="tile" data-go="inbody"><span class="ic">📊</span>InBody</button>
+  </div>
+  <div style="margin-top:22px"><a class="btn" id="coachBtn" target="_blank" rel="noopener">💬 تواصلي مع الكوتش</a></div>
+</section>
+
+<section class="view" id="schedule">
+  <h2>جدول الحصص</h2>
+  <div class="days" id="days"></div>
+  <div id="classes"></div>
+</section>
+
+<section class="view" id="workout">
+  <h2>برنامج التمارين</h2>
+  <div id="plan"></div>
+</section>
+
+<section class="view" id="nutrition">
+  <h2>التغذية</h2>
+  <div class="cls"><div class="meta">للحصول على خطة غذائية مناسبة لكِ، تواصلي مع أخصائية التغذية.</div>
+  <a class="btn" id="nutBtn" target="_blank" rel="noopener">💬 اطلبي خطة غذائية</a></div>
+</section>
+
+<section class="view" id="inbody">
+  <h2>قياس InBody</h2>
+  <div class="cls"><div class="meta">احجزي موعد قياس InBody لمتابعة الدهون والعضلات وتقدّمك.</div>
+  <a class="btn" id="inbBtn" target="_blank" rel="noopener">📅 احجزي موعد</a></div>
+</section>
+
+<div class="modal" id="modal"><div class="sheet">
+  <h3 id="mTitle"></h3><div class="meta" id="mSub" style="color:var(--mute);font-size:13px"></div>
+  <input id="mName" placeholder="الاسم الكامل" autocomplete="name">
+  <input id="mPhone" placeholder="رقم الموبايل (مثال 0791234567)" inputmode="tel" autocomplete="tel">
+  <div class="msg" id="mMsg"></div>
+  <button class="btn" id="mSend">تأكيد الحجز</button>
+  <button class="btn alt" id="mClose">إلغاء</button>
+</div></div>
+
+<a class="fab" id="fab" target="_blank" rel="noopener" aria-label="واتساب">💬</a>
+
+<nav>
+  <button data-go="home" class="on"><span class="ic">🏠</span>الرئيسية</button>
+  <button data-go="schedule"><span class="ic">📅</span>الحصص</button>
+  <button data-go="workout"><span class="ic">💪</span>التمارين</button>
+  <button data-go="nutrition"><span class="ic">🍎</span>التغذية</button>
+</nav>
+
+<script>
+/* ===== عدّلي هذه القيم ===== */
+const WHATSAPP = "962700000000";            // رقم واتساب النادي بصيغة دولية بدون +
+const SPOTS = 10;                           // عدد الأماكن لكل حصة
+const API_URL = "https://script.google.com/macros/s/AKfycbwZYnILlK_RNTeCv6l54kOqcgG1ZNxtR7DieFuPPQV0mXOdBl4jnlytY9ZwmTP8fvl1/exec"; // رابط Google Apps Script بعد النشر (انظري الشرح)
+const SCHEDULE = {                          // أمثلة — بدّلي الأوقات والكوتشات
+  "السبت":   [["Zumba","18:00","60 د","Sara"],["Pilates","19:15","60 د","Lina"],["TRX","20:30","45 د","Hala"]],
+  "الأحد":   [["Functional training","17:30","60 د","Hala"],["Barre pilates","18:45","60 د","Lina"],["Oriental dance","20:00","60 د","Sara"]],
+  "الاثنين": [["Spinning","17:30","45 د","Dana"],["Body bump","18:30","60 د","Hala"],["Core muscles","19:45","45 د","Lina"]],
+  "الثلاثاء":[["Bands","17:30","45 د","Sara"],["Steps","18:30","60 د","Dana"],["Zumba","19:45","60 د","Sara"]],
+  "الأربعاء":[["Gym ball","17:30","45 د","Lina"],["Dumbbell sculpt","18:30","60 د","Hala"],["Gymnastics","19:45","60 د","Dana"]],
+  "الخميس":  [["Sticks","17:30","45 د","Sara"],["Ankle weights","18:30","45 د","Hala"],["Pilates","19:30","60 د","Lina"]],
+  "الجمعة":  []
+};
+const PLAN = {
+  "اليوم 1 – صدر وترايسبس":["Chest press – 3×12","Incline dumbbell press – 3×12","Chest fly – 3×15","Triceps pushdown – 3×12"],
+  "اليوم 2 – ظهر وبايسبس":["Lat pulldown – 3×12","Seated row – 3×12","Dumbbell curl – 3×12","Hammer curl – 3×12"],
+  "اليوم 3 – أرجل":["Squat – 4×12","Leg press – 3×15","Hip thrust – 4×12","Leg curl – 3×12"],
+  "اليوم 4 – أكتاف وبطن":["Shoulder press – 3×12","Lateral raise – 3×15","Plank – 3×45s","Leg raises – 3×15"],
+  "اليوم 5 – كارديو وكور":["Treadmill intervals – 20 د","Bike – 15 د","Russian twist – 3×20"],
+  "اليوم 6 – راحة":["راحة أو مشي خفيف"]
+};
+/* ========================== */
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+const wa=t=>`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(t)}`;
+$("#coachBtn").href=wa("مرحبا، بدي أتواصل مع الكوتش – Xfit فترة النساء");
+$("#nutBtn").href=wa("مرحبا، بدي خطة غذائية – Xfit فترة النساء");
+$("#inbBtn").href=wa("مرحبا، بدي أحجز موعد InBody – Xfit فترة النساء");
+$("#fab").href=wa("مرحبا Xfit gym");
+
+function go(id){
+  $$(".view").forEach(v=>v.classList.toggle("on",v.id===id));
+  $$("nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===id));
+  scrollTo(0,0);
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go)});
+
+const DOW={"الأحد":0,"الاثنين":1,"الثلاثاء":2,"الأربعاء":3,"الخميس":4,"الجمعة":5,"السبت":6};
+function nextDate(day,time){
+  const now=new Date(),[hh,mm]=time.split(":").map(Number);
+  const d=new Date(now.getFullYear(),now.getMonth(),now.getDate(),hh,mm);
+  let diff=(DOW[day]-now.getDay()+7)%7;
+  d.setDate(d.getDate()+diff);
+  if(d<now)d.setDate(d.getDate()+7);
+  return d;
+}
+const pad=n=>String(n).padStart(2,"0");
+const dkey=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const keyOf=(day,c)=>`${dkey(nextDate(day,c[1]))}|${c[1]}|${c[0]}`;
+let counts={}, cur=Object.keys(SCHEDULE)[0], pending=null;
+
+async function api(params){
+  const r=await fetch(API_URL+"?"+new URLSearchParams(params));
+  return r.json();
+}
+async function loadCounts(){
+  try{counts=(await api({action:"counts"})).counts||{}}catch(e){counts={}}
+  renderClasses();
+}
+function renderDays(){
+  $("#days").innerHTML=Object.keys(SCHEDULE).map(d=>`<button class="day ${d===cur?"on":""}" data-d="${d}">${d}</button>`).join("");
+}
+function renderClasses(){
+  const list=SCHEDULE[cur];
+  if(!list.length){$("#classes").innerHTML='<div class="empty">لا يوجد حصص في هذا اليوم</div>';return}
+  $("#classes").innerHTML=list.map((c,i)=>{
+    const [n,t,d,co]=c, k=keyOf(cur,c), left=Math.max(0,SPOTS-(counts[k]||0));
+    return `<div class="cls"><div class="top"><span class="name">${n}</span><span class="badge">${left?left+" أماكن متبقية":"مكتملة"}</span></div>
+    <div class="meta">🕒 ${t} &nbsp;•&nbsp; 👩‍🏫 ${co} &nbsp;•&nbsp; ⏱ ${d}<br>📆 ${nextDate(cur,t).toLocaleDateString("ar-JO",{weekday:"long",day:"numeric",month:"long"})}</div>
+    <button class="btn ${left?"":"full"}" data-book="${i}">${left?"احجزي مكانك":"الحصة مكتملة"}</button></div>`}).join("");
+}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-d]");if(b){cur=b.dataset.d;renderDays();renderClasses()}
+  const k=e.target.closest("[data-book]");
+  if(k){const c=SCHEDULE[cur][+k.dataset.book];pending={c,key:keyOf(cur,c),day:cur};
+    $("#mTitle").textContent=c[0];$("#mSub").textContent=`${cur} • ${c[1]}`;$("#mMsg").textContent="";
+    $("#mSend").style.display="";$("#modal").classList.add("on")}
+});
+$("#mClose").onclick=()=>$("#modal").classList.remove("on");
+$("#mSend").onclick=async()=>{
+  const name=$("#mName").value.trim(),phone=$("#mPhone").value.trim(),m=$("#mMsg");
+  if(name.length<2||phone.replace(/\D/g,"").length<9){m.textContent="الرجاء إدخال الاسم ورقم صحيح";m.style.color="#d33";return}
+  m.style.color="var(--mute)";m.textContent="جاري الحجز...";$("#mSend").disabled=true;
+  try{
+    const r=await api({action:"book",key:pending.key,cls:pending.c[0],day:pending.day,time:pending.c[1],name,phone,spots:SPOTS});
+    if(r.ok){m.style.color="#1a9d4a";m.textContent="✅ تم الحجز بنجاح! بنشوفك قريب 💗";$("#mSend").style.display="none";loadCounts()}
+    else{m.style.color="#d33";m.textContent=r.error||"صار خطأ، جرّبي مرة ثانية"}
+  }catch(e){m.style.color="#d33";m.textContent="تعذّر الاتصال، جرّبي مرة ثانية"}
+  $("#mSend").disabled=false;
+};
+renderDays();renderClasses();loadCounts();
+
+$("#plan").innerHTML=Object.entries(PLAN).map(([k,v])=>`<details><summary>${k}</summary><ul>${v.map(x=>`<li>${x}</li>`).join("")}</ul></details>`).join("");
+</script>
+</body>
+</html>
