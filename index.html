@@ -57,7 +57,6 @@ nav button.on{color:var(--pink);font-weight:700}
     <button class="tile" data-go="nutrition"><span class="ic">🍎</span>التغذية</button>
     <button class="tile" data-go="inbody"><span class="ic">📊</span>InBody</button>
   </div>
-  <div style="margin-top:22px"><a class="btn" id="coachBtn" target="_blank" rel="noopener">💬 تواصلي مع الكوتش</a></div>
 </section>
 
 <section class="view" id="schedule">
@@ -126,7 +125,6 @@ const PLAN = {
 /* ========================== */
 const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
 const wa=t=>`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(t)}`;
-$("#coachBtn").href=wa("مرحبا، بدي أتواصل مع الكوتش – Xfit فترة النساء");
 $("#nutBtn").href=wa("مرحبا، بدي خطة غذائية – Xfit فترة النساء");
 $("#inbBtn").href=wa("مرحبا، بدي أحجز موعد InBody – Xfit فترة النساء");
 $("#fab").href=wa("مرحبا Xfit gym");
